@@ -1,20 +1,27 @@
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MultiLabelBinarizer
-from recs_algorithms import calculate_pmi
+from utils import calculate_pmi
 
 """Read data"""
 # Molecules content
-ingr = pd.read_csv('data/raw/FlavorNetwork/ingr_info.tsv', sep='\t', header=0)
-ingr_comp = pd.read_csv('data/raw/FlavorNetwork/ingr_comp.tsv', sep='\t', header=0)
+ingr = pd.read_csv('data/raw/FlavorNetwork/ingr_info.tsv',
+                   sep='\t', header=0)
+ingr_comp = pd.read_csv('data/raw/FlavorNetwork/ingr_comp.tsv',
+                        sep='\t', header=0)
 
 # Recipes
-flav_recipes1 = pd.read_csv('data/raw/FlavorNetwork/cuisine-ingredients.csv', skiprows=4, names=list(range(20)), error_bad_lines=False)
-flav_recipes2 = pd.read_csv('data/raw/allr_recipes.txt', sep='\t', names=list(range(20)), error_bad_lines=False)
+flav_recipes1 = pd.read_csv('data/raw/FlavorNetwork/cuisine-ingredients.csv',
+                            skiprows=4, names=list(range(20)),
+                            error_bad_lines=False)
+flav_recipes2 = pd.read_csv('data/raw/allr_recipes.txt',
+                            sep='\t', names=list(range(20)),
+                            error_bad_lines=False)
 
 """Make recipe data set"""
 # map countries to regions
-map_countries = pd.read_csv('data/raw/map.txt', sep='\t', names=['from', 'to'])
+map_countries = pd.read_csv('data/raw/map.txt',
+                            sep='\t', names=['from', 'to'])
 map_countries_dict = map_countries.to_dict()
 map_countries_dict = map_countries.set_index('from').to_dict()
 map_countries_dict = map_countries_dict['to']
@@ -46,7 +53,6 @@ recipes['ingredient_names'] = recipes.ingredient_names.apply(lambda x: list(filt
 
 # drop recipes with less than 3 ingredients
 filter_len = lambda lst: lst if len(lst) > 2 else np.nan
-
 recipes['ingredient_names'] = recipes['ingredient_names'].apply(filter_len)
 recipes.dropna(subset=['ingredient_names'], inplace=True)
 
@@ -58,7 +64,11 @@ ingr_ids = ingr.loc[:, ['# id', 'ingredient name']]
 ingr_comp_lists = ingr_comp.groupby('# ingredient id')['compound id'].apply(list).reset_index()
 n_compounds = ingr_comp['compound id'].nunique()
 
-flavors_df = pd.merge(left=ingr_ids, right=ingr_comp_lists, left_on='# id', right_on='# ingredient id').\
+flavors_df = pd.\
+    merge(left=ingr_ids,
+          right=ingr_comp_lists,
+          left_on='# id',
+          right_on='# ingredient id').\
     drop(['# id', '# ingredient id'], axis=1).\
     rename(columns={'compound id': 'compounds'}).\
     set_index('ingredient name').\
