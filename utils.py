@@ -1,4 +1,3 @@
-import pandas as pd
 import numpy as np
 import pandas as pd
 import itertools
@@ -197,7 +196,6 @@ def recsys_rev(ingredient, encoded_ingredients, pmi_df):
     """Final rating"""
 
     # combine similarities with pmi, normalize
-
     recommendations = combinations.copy().loc[:, ['Neighbor', 'Well combined', 'pmi']].rename(columns={'pmi':'Rating'})
     recommendations = pd.merge(left=recommendations,
                                right=neighbors.loc[:, ['Similarity', 'Similar food']],

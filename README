@@ -1,0 +1,34 @@
+For Linux Ubuntu 20.04:
+
+Requirements:
+
+1) Install Anaconda   
+
+2) Open a terminal
+
+3) Clone repository
+
+	git clone https://github.com/preste-annav/RECS.git
+
+4) In the terminal navigate to the project root folder 
+
+   cd path/RECS
+
+5) Create environment using Anaconda and activate it
+
+	conda create --name yummy --file spec-file.txt
+	conda activate yummy
+
+Usage:
+
+1) Run the recommend_pairs.py using following syntax:
+
+	python3 recommend_pairs.py ingredient topN
+
+Where:
+	- ingredient - name of food for which the pairs are to recommend
+	- topN - number of recommendations to be given
+
+Example: to get 30 best food pairs for broccoli run 
+
+	python3 recommend_pairs.py broccoli 30
