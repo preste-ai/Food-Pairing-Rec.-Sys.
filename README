@@ -21,14 +21,13 @@ Requirements:
 
 Usage:
 
-1) Run the recommend_pairs.py using following syntax:
+1) Insert the desired parameters in the parameters.json
 
-	python3 recommend_pairs.py ingredient topN
+  "ingredient": name of ingredient for which recommendation will be given (str),
+  "top": number of reccomendations to give (int),
+  "plot": whether to plot the recommendations (boolean),
+  "save": whether to save the plot as file (boolean)
 
-Where:
-	- ingredient - name of food for which the pairs are to recommend
-	- topN - number of recommendations to be given
+2) Run the recommend_pairs.py using following syntax:
 
-Example: to get 30 best food pairs for broccoli run 
-
-	python3 recommend_pairs.py broccoli 30
+	python3 recommend_pairs.py

@@ -1,18 +1,26 @@
-import sys
-from models import RECS
-from utils import plot_recommendations
+import json
+from models.recs import RECS
+from utils.utils import plot_recommendations
 
 if __name__ == '__main__':
 
-    ingredient = sys.argv[1]
-    top = int(sys.argv[2])
+    with open('parameters.json', 'r') as read_file:
+
+        parameters = json.load(read_file)
+
+        ingredient = parameters['ingredient']
+        top = parameters['top']
+        plot = parameters['plot']
+        save = parameters['save']
 
     model = RECS(ingredient=ingredient, top=top,
-                 encoded_ingredients=None, recipes=None)
+                 flavor_profiles=None, recipes=None)
     recommendations = model.run()
 
-    plot_recommendations(ingredient=ingredient,
-                         recommendations=recommendations,
-                         top=top)
+    if plot:
+        plot_recommendations(ingredient=ingredient,
+                             recommendations=recommendations,
+                             top=top,
+                             save=save)
 
     print(recommendations.head(top))
