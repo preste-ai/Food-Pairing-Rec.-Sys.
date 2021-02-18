@@ -24,10 +24,8 @@ class KNNeighbours:
         """
 
         # build and fit KNN model
-        model = NearestNeighbors(n_neighbors=self.n, metric='jaccard')
-        model.fit(self.flavor_profiles)
-
-        self.model = model
+        self.model = NearestNeighbors(n_neighbors=self.n, metric='jaccard')
+        self.model.fit(self.flavor_profiles)
 
         return self.model
 
